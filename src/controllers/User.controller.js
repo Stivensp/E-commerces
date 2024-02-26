@@ -1,5 +1,8 @@
 const User = require("../models/user.js");
 const catchError = require("../utils/catchError.js");
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+
 
 const getAllUsers = catchError(async (req, res) => {
     const result = await User.findAll();
@@ -51,11 +54,17 @@ const bulkCreatedUsers = catchError(async (req, res) => {
     return res.status(201).json(result);
 })
 
+//verify password
+
 const login = catchError(async (req, res) => {
     const { email, password } = req.body
 
     const user = await User.findOne({ where: { email } })
-    if(!user) return res.sendStatus(401).json({error: 'User not found'})
+    if(!user) return res.sendStatus(401).json({error: 'Invalid credentials'})
+
+   const isValid = await bcrypt.compare(password, user.password)
+    if(!isValid) return res.sendStatus(401).json({error: 'Invalid credentials'})
+    
 
     const token = jwt.sign({ user }, process.env.TOKEN_SECRET, { expiresIn: '24h' });
     return res.json({ user, token })
