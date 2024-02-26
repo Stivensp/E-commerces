@@ -29,12 +29,8 @@ const deleteUser = catchError(async (req, res) => {
 
 const updateUser = catchError(async (req, res) => {
     const { id } = req.params;
-    const newBody = req.body;
-
-    const idUser = await User.findByPk(id);
-
-    if(!idUser) return res.send("User not Found").status(404);
-
+    const { firstName, lastName, email, password, phone } = req.body;
+    const newBody = { firstName, lastName, email, password, phone };
     const result = await User.update(
         newBody,
         {
@@ -42,14 +38,27 @@ const updateUser = catchError(async (req, res) => {
             returning: true
         }
     );
-
+    if (result[0] === 0) {
+        // No se encontró ningún usuario para actualizar
+        return res.sendStatus(404);
+    }
     return res.json(result[1][0]);
-})
+});
 
 //only to create a lot of Users
 const bulkCreatedUsers = catchError(async (req, res) => {
     const result = await User.bulkCreate(req.body);
     return res.status(201).json(result);
+})
+
+const login = catchError(async (req, res) => {
+    const { email, password } = req.body
+
+    const user = await User.findOne({ where: { email } })
+    if(!user) return res.sendStatus(401).json({error: 'User not found'})
+
+    const token = jwt.sign({ user }, process.env.TOKEN_SECRET, { expiresIn: '24h' });
+    return res.json({ user, token })
 })
 
 module.exports = {
@@ -58,5 +67,6 @@ module.exports = {
     createUser,
     deleteUser,
     updateUser,
-    bulkCreatedUsers
+    bulkCreatedUsers,
+    login
 }
