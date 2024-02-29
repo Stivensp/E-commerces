@@ -11,10 +11,7 @@ let userId
 let product
 let productBody
 let bodyCart
-
 beforeAll(async () => {
-
-  //inicio de sesion
   const user = {
     email: "luis@luis",
     password: "luis123"
@@ -27,7 +24,6 @@ beforeAll(async () => {
   TOKEN = res.body.token
   userId = res.body.user.id
 
-  //PRODUCT
   productBody = {
     title: 'lorem10',
     description: 'lorem30',
@@ -36,8 +32,6 @@ beforeAll(async () => {
 
   product = await Product.create(productBody)
 
-
-  //CART
   bodyCart = {
     productId: product.id,
     quantity: 3
@@ -55,7 +49,7 @@ test("POST -> URL_PURCHASE, should return status code 201, res.body to be define
     .post(URL_PURCHASE)
     .set("Authorization", `Bearer ${TOKEN}`)
 
-  // console.log(res.body);
+
   expect(res.status).toBe(201)
   expect(res.body[0]).toBeDefined()
   expect(res.body[0].quantity).toBe(bodyCart.quantity)
@@ -66,7 +60,7 @@ test("GET -> URL_PURCHASE, should return status code 200, res.body to be defined
     .get(URL_PURCHASE)
     .set("Authorization", `Bearer ${TOKEN}`)
 
-  // console.log(res.body);
+
 
   expect(res.status).toBe(200)
   expect(res.body).toBeDefined()

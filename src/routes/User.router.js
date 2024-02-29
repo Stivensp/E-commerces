@@ -11,7 +11,6 @@ routerUser.route("/")
 
 routerUser.route("/login")
     .post(login);
-
 routerUser.route("/:id")
     .get(getOneUser)
     .delete(verifyJWT,deleteUser)

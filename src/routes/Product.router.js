@@ -6,7 +6,6 @@ const routerProduct = express.Router();
 routerProduct.route("/")
     .get(getAllProducts)
     .post(createProduct);
-
 routerProduct.route("/:id")
     .get(getOneProduct)
     .delete(deleteProduct)

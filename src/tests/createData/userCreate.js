@@ -1,6 +1,5 @@
 const User = require("../../models/user");
 const userCreate = async () => {
-    
     await User.create(
         {
             firstName:'Luis',
@@ -11,5 +10,4 @@ const userCreate = async () => {
         }
     )
 }
-
 module.exports = userCreate

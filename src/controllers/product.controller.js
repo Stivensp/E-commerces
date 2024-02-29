@@ -29,8 +29,6 @@ const deleteProduct = catchError(async (req, res) => {
     return res.status(204).send("Product deleted");
 })
 
-
-
 const updateProduct = catchError(async (req, res) => {
     const { id } = req.params;
     const { title, description, price} = req.body;
@@ -43,14 +41,11 @@ const updateProduct = catchError(async (req, res) => {
         }
     );
     if (result[0] === 0) {
-        // No se encontró ningún usuario para actualizar
         return res.sendStatus(404);
     }
     return res.json(result[1][0]);
 });
 
-
-//only to create a lot of Products
 const bulkCreatedProducts = catchError(async (req, res) => {
     const result = await Product.bulkCreate(req.body);
     return res.status(201).json(result);

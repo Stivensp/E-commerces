@@ -9,7 +9,7 @@ const getAll = catchError(async (req, res) => {
   const results = await Cart.findAll({
     where: { userId },
     include: [
-      // Product
+
       {
         model: Product,
         attributes: { exclude: ["updatedAt", "createdAt"] },
@@ -28,14 +28,13 @@ const getAll = catchError(async (req, res) => {
   });
   return res.json(results);
 });
-
 const getOne = catchError(async (req, res) => {
   const { id } = req.params
   const userId = req.user.id
   const results = await Cart.findByPk(id, {
     where: { userId },
     include: [
-      // Product
+
       {
         model: Product,
         attributes: { exclude: ["updatedAt", "createdAt"] },

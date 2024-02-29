@@ -9,6 +9,5 @@ routerCategory.route("/")
 
 routerCategory.route("/:id")
     .delete(verifyJWT,deleteCategory)
-  
 
 module.exports = routerCategory;

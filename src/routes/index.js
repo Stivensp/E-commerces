@@ -8,12 +8,11 @@ const routerPurchase = require('./purchase.router');
 const routerProductImg = require('./productImg.router');
 const router = express.Router();
 
-// colocar las rutas aquí
 router.use('/users', routerUser)
 router.use('/categories', routerCategory)
 router.use('/products', routerProduct)
-router.use('/cart', verifyJWT, routerCart) //🔐🔐🔐🔐💪😊
-router.use('/purchase', verifyJWT, routerPurchase) //🔐🔐🔐🔐💪😊
-router.use('/product_images', routerProductImg)//🔐🔐🔐🔐💪😊
+router.use('/cart', verifyJWT, routerCart) 
+router.use('/purchase', verifyJWT, routerPurchase)
+router.use('/product_images', routerProductImg)
 
 module.exports = router;

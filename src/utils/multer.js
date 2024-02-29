@@ -10,5 +10,4 @@ const upload = multer({
     destination: path.join(__dirname, '..', 'public', 'uploads'),
   }),
 })
-
 module.exports = upload;

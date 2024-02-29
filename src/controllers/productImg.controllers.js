@@ -16,7 +16,6 @@ const create = catchError(async (req, res) => {
   return res.status(201).json(result)
 
 })
-
 const remove = catchError(async (req, res) => {
   const { id } = req.params
   const result = await ProductImg.findByPk(id)
@@ -26,7 +25,6 @@ const remove = catchError(async (req, res) => {
   await result.destroy()
   return res.sendStatus(204)
 })
-
 module.exports = {
   getAll,
   create,
